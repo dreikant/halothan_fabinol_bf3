@@ -8,12 +8,16 @@
 
 #include "BF3_SDK.h"
 
-typedef HRESULT (WINAPI* tPresent)(LPDIRECT3DSWAPCHAIN9 pSwapChain, const RECT *pSourceRect,const RECT *pDestRect,HWND hDestWindowOverride,const RGNDATA *pDirtyRegion,DWORD dwFlags);
+//typedef HRESULT (WINAPI* tPresent)(LPDIRECT3DSWAPCHAIN9 pSwapChain, const RECT *pSourceRect,const RECT *pDestRect,HWND hDestWindowOverride,const RGNDATA *pDirtyRegion,DWORD dwFlags);
+//tPresent oPresent;
+
+typedef HRESULT (WINAPI* tPresent)(IDXGISwapChain* swap, UINT SyncInterval, UINT Flags);
 tPresent oPresent;
 
-HRESULT WINAPI hkPresent(LPDIRECT3DSWAPCHAIN9 pSwapChain, const RECT *pSourceRect,const RECT *pDestRect,HWND hDestWindowOverride,const RGNDATA *pDirtyRegion,DWORD dwFlags)
+//HRESULT WINAPI hkPresent(LPDIRECT3DSWAPCHAIN9 pSwapChain, const RECT *pSourceRect,const RECT *pDestRect,HWND hDestWindowOverride,const RGNDATA *pDirtyRegion,DWORD dwFlags)
+HRESULT WINAPI hkPresent(IDXGISwapChain* swap, UINT SyncInterval, UINT Flags)
 {
-	return oPresent(pSwapChain, pSourceRect, pDestRect, hDestWindowOverride, pDirtyRegion,dwFlags);
+	return oPresent(swap, SyncInterval, Flags);
 }
 
 DWORD CreateDetours()
