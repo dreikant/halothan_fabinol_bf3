@@ -10,7 +10,6 @@
 
 #pragma comment(lib, "D3dx9.lib")
 
-
 #define OFFSET_CLIENTGAMECONTEXT	0x233FC74
 #define OFFSET_GAMERENDERER			0x2343A44
 #define OFFSET_DXRENDERER			0x2323D94
