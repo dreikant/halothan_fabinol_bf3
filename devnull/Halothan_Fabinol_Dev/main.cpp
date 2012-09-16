@@ -37,7 +37,7 @@ void drawESP()
             localPlayer  = cheats->getLocalPlayer( );
             targetPlayer = cheats->getPlayerById( i );
 
-            if ( VALID( localPlayer ) && VALID( targetPlayer ) )
+			if ( VALID( localPlayer ) && VALID( targetPlayer ) && localPlayer != targetPlayer )
             {
                 fb::ClientSoldierEntity* localSoldier;
                 fb::ClientSoldierEntity* targetSoldier;
