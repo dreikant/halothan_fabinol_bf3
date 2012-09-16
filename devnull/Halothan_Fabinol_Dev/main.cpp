@@ -11,18 +11,15 @@
 //typedef HRESULT (WINAPI* tPresent)(LPDIRECT3DSWAPCHAIN9 pSwapChain, const RECT *pSourceRect,const RECT *pDestRect,HWND hDestWindowOverride,const RGNDATA *pDirtyRegion,DWORD dwFlags);
 //tPresent oPresent;
 
-typedef HRESULT (WINAPI* tPresent)(DWORD theClass, unsigned int, unsigned int);
+typedef HRESULT (WINAPI* tPresent)(IDXGISwapChain* theClass, unsigned int, unsigned int);
 tPresent oPresent;
 
 
 
 //HRESULT WINAPI hkPresent(LPDIRECT3DSWAPCHAIN9 pSwapChain, const RECT *pSourceRect,const RECT *pDestRect,HWND hDestWindowOverride,const RGNDATA *pDirtyRegion,DWORD dwFlags)
-HRESULT WINAPI hkPresent(DWORD theclass, unsigned int d, unsigned int e)
+HRESULT WINAPI hkPresent(IDXGISwapChain* theclass, unsigned int d, unsigned int e)
 {
 	fb::DebugRenderer2* engineRender = fb::DebugRenderer2::Singleton( );
-
-	CLogFile logFile = CLogFile("log.txt",true);
-	logFile.Write("Swapchain call.");
 
 	if( VALID(engineRender) )
 	{
