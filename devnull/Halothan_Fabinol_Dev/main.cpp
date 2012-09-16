@@ -15,6 +15,16 @@
 typedef HRESULT (WINAPI* tPresent)(IDXGISwapChain* theClass, unsigned int, unsigned int);
 tPresent oPresent;
 
+static fb::Vec3 Vec3Transform( fb::Vec3 In, fb::LinearTransform * pm )
+{
+	fb::Vec3 Out;
+
+	Out.x = pm->left.x * In.x + pm->up.x * In.y + pm->forward.x * In.z + pm->trans.x;
+	Out.y = pm->left.y * In.x + pm->up.y * In.y + pm->forward.y * In.z + pm->trans.y;
+	Out.z = pm->left.z * In.x + pm->up.z * In.y + pm->forward.z * In.z + pm->trans.z;
+
+	return Out;
+}
 
 void drawESP()
 {
@@ -45,7 +55,12 @@ void drawESP()
 						engineRender->drawText( 5, i*20, fb::Color32( 255, 0, 255, 255 ), targetPlayer->m_name.GetString( ), 1 );
 						if( VALID(targetSoldier->m_characterPhysicsentity) )
 						{
-							engineRender->drawSphere(targetSoldier->m_characterPhysicsentity->m_currentLocalEyePosition,50,fb::Color32(0,0,255,255));
+							fb::AxisAlignedBox AABB = targetSoldier->m_characterPhysicsentity->m_collisionShapes->m_aabbs[0]; 
+							fb::AxisAlignedBox R;
+
+							R.min = Vec3Transform( AABB.min, targetSoldier->m_characterPhysicsentity->m_gameWorldTransform);
+
+							engineRender->drawSphere(R.min,5,fb::Color32(0,0,255,255));
 						}
 						/*
                         if ( cheats->worldToScreen( targetSoldier, &screenX, &screenY ) )
