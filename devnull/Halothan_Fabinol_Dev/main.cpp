@@ -17,7 +17,7 @@ tPresent oPresent;
 
 
 //HRESULT WINAPI hkPresent(LPDIRECT3DSWAPCHAIN9 pSwapChain, const RECT *pSourceRect,const RECT *pDestRect,HWND hDestWindowOverride,const RGNDATA *pDirtyRegion,DWORD dwFlags)
-HRESULT hkPresent(DWORD theclass, struct IDXGISurface * a, struct IDXGISurface * b, void * c, unsigned int d, unsigned int e)
+HRESULT WINAPI hkPresent(DWORD theclass, struct IDXGISurface * a, struct IDXGISurface * b, void * c, unsigned int d, unsigned int e)
 {
 	return oPresent(theclass, a, b, c, d, e);
 }
