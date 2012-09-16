@@ -38,5 +38,8 @@
     <ClInclude Include="BF3_SDK.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="bf3_sdk_helper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

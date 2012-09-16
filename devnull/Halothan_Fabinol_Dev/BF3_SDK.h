@@ -5117,4 +5117,6 @@ namespace fb
 		}  
 	};
 };
+
+
 #endif //BF3MANAGER_H

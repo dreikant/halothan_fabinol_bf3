@@ -6,7 +6,8 @@
 #define _DEBUG_LOG    TRUE
 #include "LogFile.h"
 
-#include "BF3_SDK.h"
+//#include "BF3_SDK.h"
+#include "bf3_sdk_helper.h"
 
 //typedef HRESULT (WINAPI* tPresent)(LPDIRECT3DSWAPCHAIN9 pSwapChain, const RECT *pSourceRect,const RECT *pDestRect,HWND hDestWindowOverride,const RGNDATA *pDirtyRegion,DWORD dwFlags);
 //tPresent oPresent;
@@ -15,6 +16,45 @@ typedef HRESULT (WINAPI* tPresent)(IDXGISwapChain* theClass, unsigned int, unsig
 tPresent oPresent;
 
 
+void drawESP()
+{
+	    for ( unsigned int i = 0; i <= 64; i ++ )
+        {
+            fb::ClientPlayer* localPlayer;
+            fb::ClientPlayer* targetPlayer;
+			BOSS* cheats = &BOSS();
+
+            localPlayer  = cheats->getLocalPlayer( );
+            targetPlayer = cheats->getPlayerById( i );
+
+            if ( VALID( localPlayer ) && VALID( targetPlayer ) )
+            {
+                fb::ClientSoldierEntity* localSoldier;
+                fb::ClientSoldierEntity* targetSoldier;
+
+                localSoldier  = cheats->getSoldier( localPlayer );
+                targetSoldier = cheats->getSoldier( targetPlayer );
+
+                if ( VALID( localSoldier ) && VALID( targetSoldier ) )
+                {
+                    fb::DebugRenderer2* engineRender = fb::DebugRenderer2::Singleton( );
+
+                    if ( VALID( engineRender ) )
+                    {
+                        float screenX, screenY;
+						engineRender->drawText( 5, i*20, fb::Color32( 255, 0, 255, 255 ), targetPlayer->m_name.GetString( ), 1 );
+
+						/*
+                        if ( cheats->worldToScreen( targetSoldier, &screenX, &screenY ) )
+                        {
+                            engineRender->drawText( screenX, screenY, fb::Color32( 255, 0, 255, 255 ), targetPlayer->m_name.GetString( ), 1 );
+                        }*/
+                    }
+
+                }
+            }
+        }  
+}
 
 //HRESULT WINAPI hkPresent(LPDIRECT3DSWAPCHAIN9 pSwapChain, const RECT *pSourceRect,const RECT *pDestRect,HWND hDestWindowOverride,const RGNDATA *pDirtyRegion,DWORD dwFlags)
 HRESULT WINAPI hkPresent(IDXGISwapChain* theclass, unsigned int d, unsigned int e)
@@ -23,7 +63,8 @@ HRESULT WINAPI hkPresent(IDXGISwapChain* theclass, unsigned int d, unsigned int 
 
 	if( VALID(engineRender) )
 	{
-		engineRender->drawText(5,5,fb::Color32(255,0,0,255),"Test",1);
+		//engineRender->drawText(5,5,fb::Color32(255,0,0,255),"Test",1);
+		drawESP();
 	}
 	return oPresent(theclass, d, e);
 }

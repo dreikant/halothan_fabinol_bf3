@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BF3_SDK.h" />
+    <ClInclude Include="bf3_sdk_helper.h" />
     <ClInclude Include="Detours.h" />
     <ClInclude Include="LogFile.h" />
   </ItemGroup>
