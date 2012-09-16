@@ -21,6 +21,9 @@ HRESULT WINAPI hkPresent(DWORD theclass, struct IDXGISurface * a, struct IDXGISu
 {
 	fb::DebugRenderer2* engineRender = fb::DebugRenderer2::Singleton( );
 
+	CLogFile logFile = CLogFile("log.txt",true);
+	logFile.Write("Swapchain call.");
+
 	if( VALID(engineRender) )
 	{
 		engineRender->drawText(5,5,fb::Color32(255,0,0,255),"Test",1);
