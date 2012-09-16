@@ -15,7 +15,7 @@ DWORD CreateDetours()
 	logFile.Write("Create Detours...");
 	logFile.Write("Create Detours Finished...");
 	fb::DxRenderer* g_dxRenderer = fb::DxRenderer::Singleton( );
-
+	// Test Kommentar
 	if( g_dxRenderer == NULL )
 	{
 		logFile.Write("Swapchain not found...");
