@@ -19,6 +19,12 @@ tPresent oPresent;
 //HRESULT WINAPI hkPresent(LPDIRECT3DSWAPCHAIN9 pSwapChain, const RECT *pSourceRect,const RECT *pDestRect,HWND hDestWindowOverride,const RGNDATA *pDirtyRegion,DWORD dwFlags)
 HRESULT WINAPI hkPresent(DWORD theclass, struct IDXGISurface * a, struct IDXGISurface * b, void * c, unsigned int d, unsigned int e)
 {
+	fb::DebugRenderer2* engineRender = fb::DebugRenderer2::Singleton( );
+
+	if( VALID(engineRender) )
+	{
+		engineRender->drawText(5,5,fb::Color32(255,0,0,255),"Test",1);
+	}
 	return oPresent(theclass, a, b, c, d, e);
 }
 
