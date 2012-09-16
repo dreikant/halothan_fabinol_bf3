@@ -79,10 +79,8 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 		if (argc != 3) {
 			printf(
-				"DLL Injector by Jakash3\n"
-				"Usage: %s PROGRAM DLL\n"
-				"   PROGRAM - Image name or PID\n"
-				"   DLL - DLL to load and execute entry point code\n",
+				"DLL Injector"
+				"Usage: %s PROGRAM DLL\n",
 				argv[0]
 			);
 		}
