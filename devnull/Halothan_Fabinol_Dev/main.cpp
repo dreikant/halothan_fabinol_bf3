@@ -11,13 +11,13 @@
 //typedef HRESULT (WINAPI* tPresent)(LPDIRECT3DSWAPCHAIN9 pSwapChain, const RECT *pSourceRect,const RECT *pDestRect,HWND hDestWindowOverride,const RGNDATA *pDirtyRegion,DWORD dwFlags);
 //tPresent oPresent;
 
-typedef HRESULT (WINAPI* tPresent)(DWORD theClass, struct IDXGISurface *, struct IDXGISurface *, void *, unsigned int, unsigned int);
+typedef HRESULT (WINAPI* tPresent)(DWORD theClass, unsigned int, unsigned int);
 tPresent oPresent;
 
 
 
 //HRESULT WINAPI hkPresent(LPDIRECT3DSWAPCHAIN9 pSwapChain, const RECT *pSourceRect,const RECT *pDestRect,HWND hDestWindowOverride,const RGNDATA *pDirtyRegion,DWORD dwFlags)
-HRESULT WINAPI hkPresent(DWORD theclass, struct IDXGISurface * a, struct IDXGISurface * b, void * c, unsigned int d, unsigned int e)
+HRESULT WINAPI hkPresent(DWORD theclass, unsigned int d, unsigned int e)
 {
 	fb::DebugRenderer2* engineRender = fb::DebugRenderer2::Singleton( );
 
@@ -28,7 +28,7 @@ HRESULT WINAPI hkPresent(DWORD theclass, struct IDXGISurface * a, struct IDXGISu
 	{
 		engineRender->drawText(5,5,fb::Color32(255,0,0,255),"Test",1);
 	}
-	return oPresent(theclass, a, b, c, d, e);
+	return oPresent(theclass, d, e);
 }
 
 DWORD CreateDetours()
@@ -54,7 +54,7 @@ DWORD CreateDetours()
 			vtable            = ( DWORD* )vtable[0];
 
 			// ALTERNATIVE:
-			DWORD dxgi_base = (DWORD)GetModuleHandle("dxgi.dll") + (DWORD)0x300C;
+			DWORD dxgi_base = (DWORD)GetModuleHandle("dxgi.dll") + (DWORD)0x2D9D1;
 			//DWORD dxgi_base = (DWORD)vtable[8];
 
 
