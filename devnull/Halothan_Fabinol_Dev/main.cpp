@@ -11,13 +11,15 @@
 //typedef HRESULT (WINAPI* tPresent)(LPDIRECT3DSWAPCHAIN9 pSwapChain, const RECT *pSourceRect,const RECT *pDestRect,HWND hDestWindowOverride,const RGNDATA *pDirtyRegion,DWORD dwFlags);
 //tPresent oPresent;
 
-typedef HRESULT (WINAPI* tPresent)(IDXGISwapChain* swap, UINT SyncInterval, UINT Flags);
+typedef HRESULT (WINAPI* tPresent)(DWORD theClass, struct IDXGISurface *, struct IDXGISurface *, void *, unsigned int, unsigned int);
 tPresent oPresent;
 
+
+
 //HRESULT WINAPI hkPresent(LPDIRECT3DSWAPCHAIN9 pSwapChain, const RECT *pSourceRect,const RECT *pDestRect,HWND hDestWindowOverride,const RGNDATA *pDirtyRegion,DWORD dwFlags)
-HRESULT WINAPI hkPresent(IDXGISwapChain* swap, UINT SyncInterval, UINT Flags)
+HRESULT WINAPI hkPresent(DWORD theclass, struct IDXGISurface * a, struct IDXGISurface * b, void * c, unsigned int d, unsigned int e)
 {
-	return oPresent(swap, SyncInterval, Flags);
+	return oPresent(theclass, a, b, c, d, e);
 }
 
 DWORD CreateDetours()
@@ -41,8 +43,13 @@ DWORD CreateDetours()
 		{
 			DWORD* vtable    = ( DWORD* )g_dxRenderer->pSwapChain;
 			vtable            = ( DWORD* )vtable[0];
-			oPresent = ( tPresent )DetourCreate( (PBYTE)vtable[8], (PBYTE)&hkPresent, 7);
-			logFile.Write("Detoured Swapchain Function: %X -> %X ... ", g_dxRenderer->pSwapChain, (DWORD)oPresent);
+			oPresent = ( tPresent )DetourCreate( (PBYTE)vtable[8], (PBYTE)&hkPresent, 5);
+
+			// ALTERNATIVE:
+			//DWORD dxgi_base = (DWORD)GetModuleHandle("dxgi.dll") + (DWORD)0x300C;
+			DWORD dxgi_base = (DWORD)g_dxRenderer->pSwapChain;
+
+			logFile.Write("Detoured Swapchain Function: %X -> %X ... ", dxgi_base, (DWORD)oPresent);
 		}else
 		{
 			logFile.Write("Detour failed. Swapchain Invalid. %X ... ", g_dxRenderer->pSwapChain);
