@@ -43,7 +43,10 @@ void drawESP()
                     {
                         float screenX, screenY;
 						engineRender->drawText( 5, i*20, fb::Color32( 255, 0, 255, 255 ), targetPlayer->m_name.GetString( ), 1 );
-
+						if( VALID(targetSoldier->m_characterPhysicsentity) )
+						{
+							engineRender->drawSphere(targetSoldier->m_characterPhysicsentity->m_currentLocalEyePosition,50,fb::Color32(0,0,255,255));
+						}
 						/*
                         if ( cheats->worldToScreen( targetSoldier, &screenX, &screenY ) )
                         {
