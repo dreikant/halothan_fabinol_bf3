@@ -43,11 +43,15 @@ DWORD CreateDetours()
 		{
 			DWORD* vtable    = ( DWORD* )g_dxRenderer->pSwapChain;
 			vtable            = ( DWORD* )vtable[0];
-			oPresent = ( tPresent )DetourCreate( (PBYTE)vtable[8], (PBYTE)&hkPresent, 5);
 
 			// ALTERNATIVE:
-			//DWORD dxgi_base = (DWORD)GetModuleHandle("dxgi.dll") + (DWORD)0x300C;
-			DWORD dxgi_base = (DWORD)g_dxRenderer->pSwapChain;
+			DWORD dxgi_base = (DWORD)GetModuleHandle("dxgi.dll") + (DWORD)0x300C;
+			//DWORD dxgi_base = (DWORD)vtable[8];
+
+
+			oPresent = ( tPresent )DetourCreate( (PBYTE)dxgi_base, (PBYTE)&hkPresent, 5);
+
+
 
 			logFile.Write("Detoured Swapchain Function: %X -> %X ... ", dxgi_base, (DWORD)oPresent);
 		}else
